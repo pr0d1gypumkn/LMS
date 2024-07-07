@@ -1,5 +1,6 @@
 from django.views import View
 from django.http import JsonResponse
+from django.db.models import Q
 
 from books.models import Book
 from JSON_encoder import BookSerializer
@@ -12,20 +13,25 @@ class AllBooks(View):
         return JsonResponse({"books": all_books})
     
 
-class FilterBooks(View):
+class SearchBooks(View):
 
     def get(self, request):
 
-        filters = {}
+        keywords = request.GET.get('keywords', '').split()
 
-        # dynamically creating the filters
-        for field, value in request.GET.items():
-            if field == 'date':
-                pass        # TODO: how will date filtering work?
-            elif field in ['title', 'author', 'isbn'] and value != "":
-                filters[field + "__contains"] = value
+        if keywords:
+            queryset_list= Q()
 
-        filtered_books = Book.objects.filter(**filters)
-
-        filtered_books_dict = [BookSerializer(book).data for book in filtered_books]
-        return JsonResponse({"books": filtered_books_dict})
+            for keyword in keywords:
+                queryset_list |= (
+                    Q(title__icontains=keyword) |
+                    Q(author__icontains=keyword) |
+                    Q(isbn__icontains=keyword)
+                )
+            
+            results = Book.objects.filter(queryset_list).distinct()
+            results_serialized = [BookSerializer(book).data for book in results]
+        else:
+            results_serialized = [BookSerializer(book).data for book in Book.objects.all()]
+        
+        return JsonResponse({"books": results_serialized})
