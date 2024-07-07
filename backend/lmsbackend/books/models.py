@@ -6,5 +6,11 @@ class Book(models.Model):
     author = models.CharField(max_length=100)
     publication_date = models.DateField()
     isbn = models.CharField(max_length=20)
-    checked_out = models.BooleanField(default=False)
-    reader = models.ForeignKey('user.Reader', on_delete=models.PROTECT, null=True, blank=True)
+    
+class Checkout(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.PROTECT)
+    reader = models.ForeignKey('user.Reader', on_delete=models.PROTECT)
+    checkout_date = models.DateField(auto_now_add=True)
+    return_date = models.DateField(null=True, blank=True)
+    returned = models.BooleanField(default=False)
+    returned_date = models.DateField(null=True, blank=True)
