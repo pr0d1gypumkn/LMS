@@ -61,3 +61,24 @@ class CheckoutAPIView(View):
 
 def get_deadline(start_date=None):
     return datetime.today() + timedelta(days=14) if start_date is None else start_date + timedelta(days=14)
+
+
+class FilterBooks(View):
+
+    def get(self, request):
+
+        filters = {}
+
+        # dynamically creating the filters
+        for field, value in request.GET.items():
+            if not value:
+                continue
+            if field in ['title', 'author', 'isbn', 'issn']:
+                filters[field + "__icontains"] = value
+            elif field == 'genre':
+                filters[field + "__iexact"] = value
+
+        filtered_books = Book.objects.filter(**filters)
+
+        filtered_books_dict = [BookSerializer(book).data for book in filtered_books]
+        return JsonResponse({"books": filtered_books_dict})
