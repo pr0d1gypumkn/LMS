@@ -63,7 +63,7 @@ def get_deadline(start_date=None):
     return datetime.today() + timedelta(days=14) if start_date is None else start_date + timedelta(days=14)
 
 
-class FilterBooks(View):
+class SearchBooksByField(View):
 
     def get(self, request):
 
