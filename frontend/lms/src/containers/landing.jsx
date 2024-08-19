@@ -41,14 +41,14 @@ export default function Landing() {
   }, [index, books]);
 
   return (
-    <div className="pb-7">
-      <h1 className="m-[14px] ml-[100px] text-left text-main font-bold text-header">
+    <div className="pb-7 dark:bg-neutral-800 h-screen">
+      <h1 className="p-[14px] pl-[100px] text-left text-main font-bold text-header">
         Featured Books
       </h1>
       
       <div className="flex flex-row items-center">
         <KeyboardDoubleArrowLeftIcon
-          className="flex-[1] scale-[2]"
+          className="flex-[1] scale-[2] dark:text-white"
           onClick={() => setIndex(index >= 0 ? index - 1 : books.length)}
         />
         <div
@@ -61,7 +61,7 @@ export default function Landing() {
               carousel.map((book) => carousel.indexOf(book) === 1 ? <Book book={book} featured key={book.id} /> : <Book book={book} key={book.id} />))}
         </div>
         <KeyboardDoubleArrowRightIcon
-          className="flex-[1] scale-[2]"
+          className="flex-[1] scale-[2] dark:text-white"
           onClick={() => setIndex((index + 1) % books.length)}
         />
       </div>

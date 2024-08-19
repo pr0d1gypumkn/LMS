@@ -9,6 +9,7 @@ class Book(models.Model):
     isbn = models.CharField(max_length=20)
     issn = models.CharField(max_length=20)
     genre = models.CharField(max_length=50, choices=[(genre.name, genre.value) for genre in Genre])
+    copies = models.IntegerField()
     
 class Checkout(models.Model):
     book = models.ForeignKey(Book, on_delete=models.PROTECT)
