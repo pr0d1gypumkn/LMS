@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Book from "../components/book";
 import BookFilters from "../components/bookFilters";
 import constants from "../constants";
+import { toggleDateSelect } from "../components/bookFilters";
 
 export default function Books() {
   const [books, setBooks] = useState([]);
@@ -35,7 +36,7 @@ export default function Books() {
     fetch(`http://localhost:8000/books/filter/?available=${available}&range=${range}&date=${date}&genre=${genre}&sortBy=${sortBy}`)
       .then((res) => res.json())
       .then((data) => {
-        setBooks(data.books)
+        setBooks(data.books);
       })
       .catch((error) => {
         console.error("Error fetching books:", error);
@@ -46,7 +47,10 @@ export default function Books() {
     fetch(`http://localhost:8000/books/filter/?available=false&range=All&date=&genre=All&sortBy=None`)
       .then((res) => res.json())
       .then((data) => {
-        setBooks(data.books)
+        setBooks(data.books);
+        availableCheckbox.checked = false;
+        dateRange.value = "All";
+        toggleDateSelect("All");
       })
       .catch((error) => {
         console.error("Error fetching books:", error);

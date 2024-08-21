@@ -11,22 +11,27 @@ const yearValidation = (event) => {
   }
 }
 
+export function toggleDateSelect(selected) {
+  let dateSelect = document.getElementById(constants.bookFilterFields.DATE_PUBLISHED);
+  let greyedOut = 'bg-gray-300';
+  if (selected === "All") {
+    dateSelect.disabled = true;
+    if (!dateSelect.classList.contains(greyedOut)) {
+      dateSelect.classList.add(greyedOut);
+    }
+  } else {
+    dateSelect.disabled = false;
+    if (dateSelect.classList.contains(greyedOut)) {
+      dateSelect.classList.remove(greyedOut);
+    }
+  }
+  dateSelect.value = "";
+}
+
 export default function BookFilters() {
   const [genres, setGenres] = useState([]);
   const sortings = ["None", "Popular", "Title", "Author", "Publication Date"];
   const ranges = ["All", "Before", "After"];
-
-  function toggleDateSelect(selected) {
-    let dateSelect = document.getElementById(constants.bookFilterFields.DATE_PUBLISHED);
-    if (selected === "All") {
-      dateSelect.disabled = true;
-      dateSelect.classList.add('bg-gray-300');
-      dateSelect.value = "";
-    } else {
-      dateSelect.disabled = false;
-      dateSelect.classList.remove('bg-gray-300');
-    }
-  }
   
   useEffect(() => {
     fetch("http://localhost:8000/getGenres/")
