@@ -5,6 +5,10 @@ import BookFilters from "../components/bookFilters";
 import constants from "../constants";
 import { toggleDateSelect } from "../components/bookFilters";
 
+
+const BOOK_SEARCH_FIELD = "book_search";
+const SEARCH_BOOKS_BTN = "search_books_btn";
+
 export default function Books() {
   const [books, setBooks] = useState([]);
 
@@ -14,6 +18,9 @@ export default function Books() {
   const dateSelect = document.getElementById(constants.bookFilterFields.DATE_PUBLISHED);
   const genreSelect = document.getElementById(constants.bookFilterFields.GENRE);
   const sortSelect = document.getElementById(constants.bookFilterFields.SORT);
+
+  // searching
+  const searchBox = document.getElementById(BOOK_SEARCH_FIELD);
 
   useEffect(() => {
     fetch("http://localhost:8000/books/")
@@ -62,10 +69,31 @@ export default function Books() {
       });
   }
 
+  function searchBooks() {
+    let keywords = searchBox.value;
+    fetch(`http://localhost:8000/books/search/?keywords=${keywords}`)
+    .then((res) => res.json())
+    .then((data) => {
+      setBooks(data.books);
+    })
+    .catch((error) => {
+      console.error("Error fetching books:", error);
+    });
+  }
+
   return (
     <div className="p-[14px] pl-[100px] pr-[100px] dark:bg-neutral-800 h-screen">
-      <div className="text-left text-main font-bold text-4xl">
-        Books
+      <div className="grid grid-cols-2">
+        <div className="text-left text-main font-bold text-4xl col-span-1">
+          Books
+        </div>
+        <div className="col-span-1 text-right flex items-center justify-end space-x-2">
+          <input type="text" id={BOOK_SEARCH_FIELD} className="border-2 w-full px-2 py-2 w-1/2 rounded-md font-normal dark:text-black"
+            placeholder="Search books..." /> 
+          <button id={ SEARCH_BOOKS_BTN } className="btn px-3 py-2 mr-2 rounded-md" style={{ backgroundColor: "#ff8903" }} onClick={ searchBooks } >
+            Search
+          </button>
+        </div>
       </div>
       <div className="grid grid-cols-4 gap-7">
         <div className="col-span-1 text-left">
