@@ -22,5 +22,5 @@ urlpatterns = [
     path('books/', AllBooks.as_view()),
     path('getGenres/', GenreView.as_view()),
     path('books/search/', SearchBooks.as_view()),
-    path('books/search/fields/', SearchBooksByField.as_view())
+    path('books/filter/', FilterBooks.as_view())
 ]

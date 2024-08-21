@@ -4,6 +4,13 @@ import constants from "../constants.js";
 
 const EMPTY_GENRE = "";
 
+const yearValidation = (event) => {
+  const { value } = event.target;
+  if (value.length > 4) {
+    event.target.value = value.slice(0, 4);
+  }
+}
+
 export default function BookFilters() {
   const [genres, setGenres] = useState([]);
   const sortings = ["None", "Popular", "Title", "Author", "Publication Date"];
@@ -13,11 +20,11 @@ export default function BookFilters() {
     let dateSelect = document.getElementById(constants.bookFilterFields.DATE_PUBLISHED);
     if (selected === "All") {
       dateSelect.disabled = true;
-      dateSelect.classList.add('bg-gray-200');
+      dateSelect.classList.add('bg-gray-300');
       dateSelect.value = "";
     } else {
       dateSelect.disabled = false;
-      dateSelect.classList.remove('bg-gray-200');
+      dateSelect.classList.remove('bg-gray-300');
     }
   }
   
@@ -69,7 +76,8 @@ export default function BookFilters() {
               </select>
             </div>
             <div>
-              <input type="date" id={ constants.bookFilterFields.DATE_PUBLISHED } className="border-2 w-full px-2 py-2 rounded-md font-normal dark:text-black" />
+              <input type="number" id={constants.bookFilterFields.DATE_PUBLISHED} className="border-2 w-full px-2 py-2 rounded-md font-normal dark:text-black" 
+                onChange={ yearValidation } placeholder="YYYY" />            
             </div>
           </td>
         </tr>
@@ -81,7 +89,7 @@ export default function BookFilters() {
             <select id={ constants.bookFilterFields.GENRE } className="border-2 w-full px-2 py-2 rounded-md dark:bg-neutral-600 dark:border" >
               {
                 genres.map((genre) => {
-                  return genre === EMPTY_GENRE? <option selected value>All</option> : 
+                  return genre === EMPTY_GENRE? <option selected value="All">All</option> : 
                     <option value={ genre } key={ genre.id }>{ genre }</option>;
                 })
               }
@@ -89,7 +97,7 @@ export default function BookFilters() {
           </td>
         </tr>
         <tr className="border-b border-neutral-200 dark:border-neutral-500">
-          <td className="border-e border-neutral-200 px-6 py-4 dark:border-white/10 space-y-1">
+          <td className="border-e border-neutral-200 px-6 py-4 dark:border-white/10 space-y-1 pb-5">
             <div className="font-bold">
               Sort by
             </div>

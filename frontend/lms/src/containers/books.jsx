@@ -32,7 +32,18 @@ export default function Books() {
     let genre = genreSelect.value;
     let sortBy = sortSelect.value;
 
-    fetch(`http://localhost:8000/books/search/fields/?available=${available}&range=${range}&date=${date}&genre=${genre}&sortBy=${sortBy}`)
+    fetch(`http://localhost:8000/books/filter/?available=${available}&range=${range}&date=${date}&genre=${genre}&sortBy=${sortBy}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setBooks(data.books)
+      })
+      .catch((error) => {
+        console.error("Error fetching books:", error);
+      });
+  }
+
+  function resetBooks() {
+    fetch(`http://localhost:8000/books/filter/?available=false&range=All&date=&genre=All&sortBy=None`)
       .then((res) => res.json())
       .then((data) => {
         setBooks(data.books)
@@ -60,7 +71,8 @@ export default function Books() {
                     style={{ backgroundColor: "#ff8903" }} onClick={ getFilteredBooks } >
                     Show Books
                   </button>
-                  <button id={ constants.bookFilterFields.RESET_BTN } className="btn px-3 py-2 rounded-md bg-gray-200">
+                  <button id={ constants.bookFilterFields.RESET_BTN } className="btn px-3 py-2 rounded-md bg-gray-200"
+                    onClick={ resetBooks }>
                     Reset
                   </button>
                 </div>
