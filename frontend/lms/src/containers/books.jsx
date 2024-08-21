@@ -44,13 +44,18 @@ export default function Books() {
   }
 
   function resetBooks() {
-    fetch(`http://localhost:8000/books/filter/?available=false&range=All&date=&genre=All&sortBy=None`)
+    let defaultAvailability = false;
+    let defaultAll = "All";
+    let defaultNone = "None";
+    fetch(`http://localhost:8000/books/filter/?available=${defaultAvailability}&range=${defaultAll}&date=&genre=${defaultAll}&sortBy=${defaultNone}`)
       .then((res) => res.json())
       .then((data) => {
         setBooks(data.books);
         availableCheckbox.checked = false;
-        dateRange.value = "All";
-        toggleDateSelect("All");
+        dateRange.value = defaultAll;
+        toggleDateSelect(defaultAll);
+        genreSelect.value = defaultAll;
+        sortSelect.value = defaultNone;
       })
       .catch((error) => {
         console.error("Error fetching books:", error);

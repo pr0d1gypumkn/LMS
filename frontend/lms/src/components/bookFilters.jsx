@@ -19,13 +19,13 @@ export function toggleDateSelect(selected) {
     if (!dateSelect.classList.contains(greyedOut)) {
       dateSelect.classList.add(greyedOut);
     }
+    dateSelect.value = "";
   } else {
     dateSelect.disabled = false;
     if (dateSelect.classList.contains(greyedOut)) {
       dateSelect.classList.remove(greyedOut);
     }
   }
-  dateSelect.value = "";
 }
 
 export default function BookFilters() {
