@@ -88,7 +88,7 @@ export default function Books() {
           Books
         </div>
         <div className="col-span-1 text-right flex items-center justify-end space-x-2">
-          <input type="text" id={BOOK_SEARCH_FIELD} className="border w-full px-2 py-2 w-1/2 rounded-md font-normal dark:text-black"
+          <input type="text" id={BOOK_SEARCH_FIELD} className="border w-full px-2 py-2 w-1/2 rounded-md font-normal dark:bg-neutral-600 dark:text-white"
             placeholder="Search books..." /> 
           <button id={ SEARCH_BOOKS_BTN } className="btn px-3 py-2 mr-2 rounded-md" style={{ backgroundColor: "#ff8903" }} onClick={ searchBooks } >
             Search
@@ -97,7 +97,7 @@ export default function Books() {
       </div>
       <div className="grid grid-cols-4 gap-7">
         <div className="col-span-1 text-left">
-          <div className="flex flex-col">
+          <div className="flex flex-col pt-4">
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="inline-block min-w-full sm:px-6 lg:px-8">
                 <div className="overflow-hidden space-y-2 dark:border dark:border-neutral-500">
