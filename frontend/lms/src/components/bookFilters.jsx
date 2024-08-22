@@ -34,7 +34,7 @@ export default function BookFilters() {
   const ranges = ["All", "Before", "After"];
   
   useEffect(() => {
-    fetch("http://localhost:8000/getGenres/")
+    fetch("http://localhost:8000/books/genres/")
       .then((res) => res.json())
       .then((data) => {
         let fullGenreList = [EMPTY_GENRE];

@@ -5,7 +5,6 @@ export default function Book({ book , featured}) {
       <h2 className="text-title font-bold flex-[1] dark:text-neutral-300">{book.title}</h2>
       <p className="flex-[0.5] dark:text-neutral-300">Written by: <br />{book.author}</p>
       <p className="text-slate-600 flex-[0.5] dark:text-neutral-400">{book.genre}</p>
-
     </div>
   );
 }
