@@ -33,7 +33,8 @@ export default function Books() {
       });
   }, []);
 
-  function getFilteredBooks() {
+  function getFilteredBooks(event) {
+    event.preventDefault();
     let available = availableCheckbox.checked;
     let range = dateRange.value;
     let date = dateSelect.value;
@@ -69,7 +70,8 @@ export default function Books() {
       });
   }
 
-  function searchBooks() {
+  function searchBooks(event) {
+    event.preventDefault();
     let keywords = searchBox.value;
     fetch(`http://localhost:8000/books/search/?keywords=${keywords}`)
     .then((res) => res.json())
@@ -87,32 +89,36 @@ export default function Books() {
         <div className="text-left text-main font-bold text-4xl col-span-1">
           Books
         </div>
-        <div className="col-span-1 text-right flex items-center justify-end space-x-2">
-          <input type="text" id={BOOK_SEARCH_FIELD} className="border w-full px-2 py-2 w-1/2 rounded-md font-normal dark:bg-neutral-600 dark:text-white"
-            placeholder="Search books..." /> 
-          <button id={ SEARCH_BOOKS_BTN } className="btn px-3 py-2 mr-2 rounded-md" style={{ backgroundColor: "#ff8903" }} onClick={ searchBooks } >
-            Search
-          </button>
-        </div>
+        <form onSubmit={ searchBooks }>
+          <div className="col-span-1 text-right flex items-center justify-end space-x-2">
+              <input type="text" id={BOOK_SEARCH_FIELD} className="border w-full px-2 py-2 w-1/2 rounded-md font-normal dark:bg-neutral-600 dark:text-white"
+                placeholder="Search books..." /> 
+              <button id={ SEARCH_BOOKS_BTN } className="btn px-3 py-2 mr-2 rounded-md" style={{ backgroundColor: "#ff8903" }} type="submit" >
+                Search
+              </button>
+          </div>
+        </form>
       </div>
       <div className="grid grid-cols-4 gap-7">
         <div className="col-span-1 text-left">
           <div className="flex flex-col pt-4">
             <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
               <div className="inline-block min-w-full sm:px-6 lg:px-8">
-                <div className="overflow-hidden space-y-2 dark:border dark:border-neutral-500">
-                  <BookFilters />
-                </div>
-                <div className="pt-2">
-                  <button id={ constants.bookFilterFields.SHOW_BTN } className="btn px-3 py-2 mr-2 rounded-md"
-                    style={{ backgroundColor: "#ff8903" }} onClick={ getFilteredBooks } >
-                    Show Books
-                  </button>
-                  <button id={ constants.bookFilterFields.RESET_BTN } className="btn px-3 py-2 rounded-md bg-gray-200"
-                    onClick={ resetBooks }>
-                    Reset
-                  </button>
-                </div>
+                <form onSubmit={ getFilteredBooks }>
+                  <div className="overflow-hidden space-y-2 dark:border dark:border-neutral-500">
+                    <BookFilters />
+                  </div>
+                  <div className="pt-2">
+                    <button id={ constants.bookFilterFields.SHOW_BTN } className="btn px-3 py-2 mr-2 rounded-md"
+                      style={{ backgroundColor: "#ff8903" }} type="submit">
+                      Show Books
+                    </button>
+                    <button id={ constants.bookFilterFields.RESET_BTN } className="btn px-3 py-2 rounded-md bg-gray-200"
+                      onClick={ resetBooks } type="reset">
+                      Reset
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
