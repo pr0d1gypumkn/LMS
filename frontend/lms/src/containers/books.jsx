@@ -88,7 +88,7 @@ export default function Books() {
           Books
         </div>
         <div className="col-span-1 text-right flex items-center justify-end space-x-2">
-          <input type="text" id={BOOK_SEARCH_FIELD} className="border-2 w-full px-2 py-2 w-1/2 rounded-md font-normal dark:text-black"
+          <input type="text" id={BOOK_SEARCH_FIELD} className="border w-full px-2 py-2 w-1/2 rounded-md font-normal dark:text-black"
             placeholder="Search books..." /> 
           <button id={ SEARCH_BOOKS_BTN } className="btn px-3 py-2 mr-2 rounded-md" style={{ backgroundColor: "#ff8903" }} onClick={ searchBooks } >
             Search

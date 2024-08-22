@@ -51,7 +51,7 @@ export default function BookFilters() {
     <table className="min-w-full border border-neutral-200 text-left text-sm font-light text-surface dark:border-white/10 dark:text-white">
       <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
         <tr>
-          <th scope="col" className="border-e border-neutral-200 px-6 py-4 dark:border-white/10 bg-gray-100 dark:bg-neutral-600">
+          <th scope="col" className="border-e border-neutral-200 px-6 py-4 dark:border-white/10 bg-lightTint dark:bg-neutral-600">
             Filters
           </th>
         </tr>
@@ -71,7 +71,7 @@ export default function BookFilters() {
               Date Published
             </div>
             <div>
-              <select id={ constants.bookFilterFields.DATE_RANGE_TYPE } className="border-2 w-full px-2 py-2 rounded-md font-normal dark:bg-neutral-600 dark:border"
+              <select id={ constants.bookFilterFields.DATE_RANGE_TYPE } className="border w-full px-2 py-2 rounded-md font-normal dark:bg-neutral-600 dark:border"
                 onChange={(event) => toggleDateSelect(event.target.value)}>
                 {
                   ranges.map((range) => {
@@ -81,7 +81,7 @@ export default function BookFilters() {
               </select>
             </div>
             <div>
-              <input type="number" id={constants.bookFilterFields.DATE_PUBLISHED} className="border-2 w-full px-2 py-2 rounded-md font-normal dark:text-black" 
+              <input type="number" id={constants.bookFilterFields.DATE_PUBLISHED} className="border w-full px-2 py-2 rounded-md font-normal dark:text-black" 
                 onChange={ yearValidation } placeholder="YYYY" />            
             </div>
           </td>
@@ -91,7 +91,7 @@ export default function BookFilters() {
             <div className="font-bold">
               Genre
             </div>
-            <select id={ constants.bookFilterFields.GENRE } className="border-2 w-full px-2 py-2 rounded-md dark:bg-neutral-600 dark:border" >
+            <select id={ constants.bookFilterFields.GENRE } className="border w-full px-2 py-2 rounded-md dark:bg-neutral-600 dark:border" >
               {
                 genres.map((genre) => {
                   return genre === EMPTY_GENRE? <option selected value="All">All</option> : 
@@ -106,7 +106,7 @@ export default function BookFilters() {
             <div className="font-bold">
               Sort by
             </div>
-            <select id={ constants.bookFilterFields.SORT } className="border-2 w-full px-2 py-2 rounded-md dark:bg-neutral-600 dark:border" >
+            <select id={ constants.bookFilterFields.SORT } className="border w-full px-2 py-2 rounded-md dark:bg-neutral-600 dark:border" >
               {
                 sortings.map((sorting) => {
                   return <option value={ sorting } key={ sorting.id }>{ sorting }</option>;
