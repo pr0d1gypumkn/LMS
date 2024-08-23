@@ -6,8 +6,13 @@ from django.utils import timezone
 from books.models import *
 from user.models import Reader
 from JSON_encoder import BookSerializer
+
 import datetime
 from itertools import chain
+import requests
+
+
+GOOGLE_BOOKS_API = "https://www.googleapis.com/books/v1/volumes?q={}+isbn&maxResults=1"
 
 
 class AllBooks(View):
@@ -125,3 +130,22 @@ class GenreView(View):
 
     def get(self, request):
         return JsonResponse({"genres": [genre.value for genre in Genre]})
+
+class BookInfo(View):
+
+    def get(self, request, book_id):
+        book = Book.objects.get(id=book_id)
+        book_details = BookSerializer(book).data
+
+        response = requests.get(GOOGLE_BOOKS_API.format(book.isbn)).json()
+        items = response["items"]
+
+        if items:
+            volume_info = items[0]["volumeInfo"]
+            book_details["description"] = volume_info["description"]
+            book_details["page_count"] = volume_info["pageCount"]
+            book_details["cover"] = volume_info["imageLinks"]["thumbnail"].replace("zoom=1", "zoom=2")
+            if "subtitle" in volume_info:
+                book_details["subtitle"] = volume_info["subtitle"]
+
+        return JsonResponse({"book": book_details})
