@@ -144,7 +144,7 @@ class BookInfo(View):
             volume_info = items[0]["volumeInfo"]
             book_details["description"] = volume_info["description"]
             book_details["page_count"] = volume_info["pageCount"]
-            book_details["cover"] = volume_info["imageLinks"]["thumbnail"].replace("zoom=1", "zoom=2")
+            book_details["cover"] = volume_info["imageLinks"]["thumbnail"].replace("zoom=1", "zoom=2").replace("http:", "https:")
             if "subtitle" in volume_info:
                 book_details["subtitle"] = volume_info["subtitle"]
 
