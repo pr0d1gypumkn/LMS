@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import LibraryHours from './library_hours';
 
 function App() {
   return (
@@ -17,6 +19,9 @@ function App() {
         >
           Learn React
         </a>
+      </header>
+      <header className="App-header">
+        <LibraryHours />
       </header>
     </div>
   );
