@@ -1,7 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import LibraryHours from './library_hours';
+import LibraryHours from './pages/LibraryHours';
+import AdminEditHours from './pages/AdminEditHours';
 
 function App() {
   return (
