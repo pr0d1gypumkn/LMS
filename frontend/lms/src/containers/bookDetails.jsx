@@ -16,6 +16,7 @@ export default function BookDetails() {
     .catch((error) => {
       console.error(`Error fetching book with id ${book_id}`, error);
     });
+    // eslint-disable-next-line
   }, []);
 
   function moreBookDetailsTable() {
@@ -55,21 +56,21 @@ export default function BookDetails() {
   }
 
   return(
-    <div className='pt-6 pl-[100px] pr-[100px] dark:bg-neutral-800 h-screen dark:text-white'>
+    <div className='page-padding dark:bg-neutral-800 h-screen dark:text-white'>
       <div className='flex flex-start'>
         <NavLink className='pb-6' to="/books">
           <ArrowBackIcon /> All Books
         </NavLink>
       </div>
-      <div className='grid grid-cols-4'>
-        <div className='text-left max-w-[300px] col-span-1 space-y-5'>
-          <img src={ book.cover } alt="" />
+      <div className='flex flex-col sm:flex-row'>
+        <div className='text-left max-w-[300px] space-y-5 pr-5'>
+            <img src={book.cover ? book.cover : "/no-cover-found.png" } alt="" className='rounded-2xl'/>
           <div>
             <button className="btn px-3 py-2 mr-2 rounded-md bg-main">Check Out Now</button>
             <button className="btn px-3 py-2 mr-2 rounded-md bg-lightTint text-black">Add to Cart</button>
           </div>
         </div>
-        <div className='text-left col-span-3'>
+        <div className='text-left pt-5 sm:pt-0'>
           <div className='font-bold text-4xl'>
             { book.title }
           </div>

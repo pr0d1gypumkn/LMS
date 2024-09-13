@@ -138,14 +138,20 @@ class BookInfo(View):
         book_details = BookSerializer(book).data
 
         response = requests.get(GOOGLE_BOOKS_API.format(book.isbn)).json()
-        items = response["items"]
 
-        if items:
-            volume_info = items[0]["volumeInfo"]
-            book_details["description"] = volume_info["description"]
-            book_details["page_count"] = volume_info["pageCount"]
-            book_details["cover"] = volume_info["imageLinks"]["thumbnail"].replace("zoom=1", "zoom=2").replace("http:", "https:")
-            if "subtitle" in volume_info:
-                book_details["subtitle"] = volume_info["subtitle"]
+        if "items" in response:
+            items = response["items"]
+
+            if items:
+                volume_info = items[0]["volumeInfo"]
+                book_details["description"] = volume_info["description"]
+                book_details["page_count"] = volume_info["pageCount"]
+                book_details["cover"] = volume_info["imageLinks"]["thumbnail"].replace("zoom=1", "zoom=2").replace("http:", "https:")
+                if "subtitle" in volume_info:
+                    book_details["subtitle"] = volume_info["subtitle"]
+        else:
+            book_details["description"] = "No description found"
+            book_details["page_count"] = ""
+            book_details["cover"] = ""
 
         return JsonResponse({"book": book_details})
