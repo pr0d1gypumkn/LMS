@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import Book from "../components/book";
 import BookFilters from "../components/bookFilters";
 import constants from "../constants";
-import { toggleDateSelect } from "../components/bookFilters";
 
 
 const BOOK_SEARCH_FIELD = "book_search";
@@ -16,6 +15,8 @@ export default function Books() {
   const availableCheckbox = document.getElementById(constants.bookFilterFields.AVAILABLE);
   const dateRange = document.getElementById(constants.bookFilterFields.DATE_RANGE_TYPE);
   const dateSelect = document.getElementById(constants.bookFilterFields.DATE_PUBLISHED);
+  const dateFromSelect = document.getElementById(constants.bookFilterFields.DATE_PUB_FROM);
+  const dateToSelect = document.getElementById(constants.bookFilterFields.DATE_PUB_TO);
   const genreSelect = document.getElementById(constants.bookFilterFields.GENRE);
   const sortSelect = document.getElementById(constants.bookFilterFields.SORT);
 
@@ -40,6 +41,18 @@ export default function Books() {
     let date = dateSelect.value;
     let genre = genreSelect.value;
     let sortBy = sortSelect.value;
+    let dateFrom = dateFromSelect.value;
+    let dateTo = dateToSelect.value;
+
+    if (dateFrom && !dateTo) {
+      date = dateFrom;
+      range = "After";
+    } else if (!dateFrom && dateTo) {
+      date = dateTo;
+      range = "Before";
+    } else if (dateFrom && dateTo) {
+      date = `${dateFrom}-${dateTo}`;
+    }
 
     fetch(`http://localhost:8000/books/filter/?available=${available}&range=${range}&date=${date}&genre=${genre}&sortBy=${sortBy}`)
       .then((res) => res.json())
@@ -61,7 +74,17 @@ export default function Books() {
         setBooks(data.books);
         availableCheckbox.checked = false;
         dateRange.value = defaultAll;
-        toggleDateSelect(defaultAll);
+
+        // reset date published filter section
+        document.getElementById(constants.bookFilterFields.DATE_RANGE_TYPE).value = "All";
+        document.getElementById(constants.bookFilterFields.DATE_PUBLISHED).value = "";
+        document.getElementById("select-range-div").classList = ["hidden"];
+        document.getElementById("select-single-year-div").classList = [];
+        let singleDateField = document.getElementById(constants.bookFilterFields.DATE_PUBLISHED);
+        if (!singleDateField.classList.contains("bg-neutral-200")) {
+          singleDateField.classList.add("bg-neutral-200");
+        }
+        
         genreSelect.value = defaultAll;
         sortSelect.value = defaultNone;
       })

@@ -11,27 +11,11 @@ const yearValidation = (event) => {
   }
 }
 
-export function toggleDateSelect(selected) {
-  let dateSelect = document.getElementById(constants.bookFilterFields.DATE_PUBLISHED);
-  let greyedOut = 'bg-gray-300';
-  if (selected === "All") {
-    dateSelect.disabled = true;
-    if (!dateSelect.classList.contains(greyedOut)) {
-      dateSelect.classList.add(greyedOut);
-    }
-    dateSelect.value = "";
-  } else {
-    dateSelect.disabled = false;
-    if (dateSelect.classList.contains(greyedOut)) {
-      dateSelect.classList.remove(greyedOut);
-    }
-  }
-}
-
 export default function BookFilters() {
   const [genres, setGenres] = useState([]);
   const sortings = ["None", "Popular", "Title", "Author", "Publication Date"];
-  const ranges = ["All", "Before", "After"];
+  const ranges = ["All", "Before", "After", "Range"];
+  const [selectedDateRangeType, setSelectedDateRangeType] = useState("");
   
   useEffect(() => {
     fetch("http://localhost:8000/books/genres/")
@@ -44,11 +28,17 @@ export default function BookFilters() {
       .catch((error) => {
         console.error("Error fetching genres:", error);
       });
-    toggleDateSelect("All");
+    setSelectedDateRangeType("All");
   }, []);
 
+  useEffect(() => {
+    document.getElementById(constants.bookFilterFields.DATE_PUBLISHED).value = "";
+    document.getElementById(constants.bookFilterFields.DATE_PUB_FROM).value = "";
+    document.getElementById(constants.bookFilterFields.DATE_PUB_TO).value = "";
+  }, [selectedDateRangeType]);
+
   return(
-    <table className="border border-neutral-200 text-left text-sm font-light text-surface dark:border-white/10 dark:text-white min-w-[260px]">
+    <table className="border border-neutral-200 text-left text-sm font-light text-surface dark:border-white/10 dark:text-white min-w-[260px] max-w-[260px]">
       <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
         <tr>
           <th scope="col" className="border-e border-neutral-200 px-6 py-4 dark:border-white/10 bg-lightTint dark:bg-neutral-600">
@@ -72,7 +62,7 @@ export default function BookFilters() {
             </div>
             <div>
               <select id={ constants.bookFilterFields.DATE_RANGE_TYPE } className="border w-full px-2 py-2 rounded-md font-normal dark:bg-neutral-600 dark:border"
-                onChange={(event) => toggleDateSelect(event.target.value)}>
+                onChange={(event) => setSelectedDateRangeType(event.target.value)}>
                 {
                   ranges.map((range) => {
                     return <option value={ range } key={ range.id }>{ range }</option>;
@@ -80,9 +70,19 @@ export default function BookFilters() {
                 }
               </select>
             </div>
-            <div>
-              <input type="number" id={constants.bookFilterFields.DATE_PUBLISHED} className="border w-full px-2 py-2 rounded-md font-normal dark:text-black" 
+            <div id="select-single-year-div" className={ selectedDateRangeType !== "Range" ? "" : "hidden" }>
+              <input type="number" id={constants.bookFilterFields.DATE_PUBLISHED}
+                className={ selectedDateRangeType === "All" ? 
+                  "bg-neutral-200 border w-full px-2 py-2 rounded-md font-normal dark:text-black" : 
+                  "border w-full px-2 py-2 rounded-md font-normal dark:text-black" }
                 onChange={ yearValidation } placeholder="YYYY" />            
+            </div>
+            <div id="select-range-div" className={ selectedDateRangeType === "Range" ? "" : "hidden" } >
+              <input type="number" id={constants.bookFilterFields.DATE_PUB_FROM} className="border w-1/3 px-2 py-2 rounded-md font-normal dark:text-black" 
+                onChange={ yearValidation } placeholder="YYYY" /> - {" "}
+              <input type="number" id={constants.bookFilterFields.DATE_PUB_TO} className="border w-1/3 px-2 py-2 rounded-md font-normal dark:text-black" 
+                onChange={ yearValidation } placeholder="YYYY" />
+              
             </div>
           </td>
         </tr>

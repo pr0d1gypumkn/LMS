@@ -63,8 +63,8 @@ export default function BookDetails() {
         </NavLink>
       </div>
       <div className='flex flex-col sm:flex-row'>
-        <div className='text-left max-w-[300px] space-y-5 pr-5'>
-            <img src={book.cover ? book.cover : "/no-cover-found.png" } alt="" className='rounded-2xl'/>
+        <div className='text-left min-w-[300px] max-w-[300px] space-y-5 pr-5'>
+          <img src={book.cover ? book.cover : "/no-cover-found.png" } alt="" className='rounded-2xl'/>
           <div>
             <button className="btn px-3 py-2 mr-2 rounded-md bg-main">Check Out Now</button>
             <button className="btn px-3 py-2 mr-2 rounded-md bg-lightTint text-black">Add to Cart</button>

@@ -86,11 +86,20 @@ class FilterBooks(View):
         # date published filter
         date_input = request.GET["date"]
         range_type = request.GET["range"]
-        date = datetime.date(int(date_input), 1, 1) if date_input else ""
+        date = ""
+        if date_input and "-" in date_input:
+            dates = date_input.split("-")
+            date_from = datetime.date(int(dates[0]), 1, 1) if dates[0] else ""
+            date_to = datetime.date(int(dates[1]), 1, 1) if dates[1] else ""
+        elif date_input:
+            date = datetime.date(int(date_input), 1, 1)
+
         if range_type == "Before" and date:
             books = books.filter(publication_date__lt=date)
         elif range_type == "After" and date:
             books = books.filter(publication_date__gt=date)
+        elif range_type == "Range" and date_from and date_to:
+            books = books.filter(publication_date__gte=date_from, publication_date__lte=date_to)
 
         # genre filter
         genre = request.GET["genre"]
