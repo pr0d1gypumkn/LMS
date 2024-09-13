@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.page-padding {
+  padding: 14px;
+  padding-left: min(100px, 5%);
+  padding-right: min(100px, 5%);
+}
+
+.navbar-padding {
+  padding-left: min(100px, 5%);
+  padding-right: min(100px, 5%);
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+}

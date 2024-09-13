@@ -84,46 +84,42 @@ export default function Books() {
   }
 
   return (
-    <div className="p-[14px] pl-[100px] pr-[100px] dark:bg-neutral-800 h-screen">
-      <div className="grid grid-cols-2">
-        <div className="text-left text-main font-bold text-4xl col-span-1">
+    <div className="page-padding dark:bg-neutral-800 h-screen">
+      <div className="flex flex-col sm:flex-row justify-between">
+        <div className="text-left text-main font-bold text-4xl">
           Books
         </div>
         <form onSubmit={ searchBooks }>
-          <div className="col-span-1 text-right flex items-center justify-end space-x-2">
-              <input type="text" id={BOOK_SEARCH_FIELD} className="border w-full px-2 py-2 w-1/2 rounded-md font-normal dark:bg-neutral-600 dark:text-white"
-                placeholder="Search books..." /> 
+          <div className="text-right flex space-x-2">
+              <input type="text" id={BOOK_SEARCH_FIELD} className="border w-full px-2 py-2 w-1/2 rounded-md font-normal dark:bg-neutral-600 dark:text-white min-w-[200px] md:min-w-[500px]"
+                placeholder="Search books..."/> 
               <button id={ SEARCH_BOOKS_BTN } className="btn px-3 py-2 mr-2 rounded-md" style={{ backgroundColor: "#ff8903" }} type="submit" >
                 Search
               </button>
           </div>
         </form>
       </div>
-      <div className="grid grid-cols-4 gap-7">
-        <div className="col-span-1 text-left">
+      <div className="flex flex-col sm:flex-row">
+        <div className="text-left h-min">
           <div className="flex flex-col pt-4">
-            <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
-              <div className="inline-block min-w-full sm:px-6 lg:px-8">
-                <form onSubmit={ getFilteredBooks }>
-                  <div className="overflow-hidden space-y-2 dark:border dark:border-neutral-500">
-                    <BookFilters />
-                  </div>
-                  <div className="pt-2">
-                    <button id={ constants.bookFilterFields.SHOW_BTN } className="btn px-3 py-2 mr-2 rounded-md"
-                      style={{ backgroundColor: "#ff8903" }} type="submit">
-                      Show Books
-                    </button>
-                    <button id={ constants.bookFilterFields.RESET_BTN } className="btn px-3 py-2 rounded-md bg-gray-200"
-                      onClick={ resetBooks } type="reset">
-                      Reset
-                    </button>
-                  </div>
-                </form>
+            <form onSubmit={ getFilteredBooks }>
+              <div className="space-y-2 dark:border dark:border-neutral-500">
+                <BookFilters />
               </div>
-            </div>
+              <div className="pt-2">
+                <button id={ constants.bookFilterFields.SHOW_BTN } className="btn px-3 py-2 mr-2 rounded-md"
+                  style={{ backgroundColor: "#ff8903" }} type="submit">
+                  Show Books
+                </button>
+                <button id={ constants.bookFilterFields.RESET_BTN } className="btn px-3 py-2 rounded-md bg-gray-200"
+                  onClick={ resetBooks } type="reset">
+                  Reset
+                </button>
+              </div>
+            </form>
           </div>
         </div>
-        <div className="books flex min-h-[356px] gap-[14px] flex-wrap col-span-3">
+        <div className="books flex min-h-[356px] gap-[14px] flex-wrap pl-[14px]">
           {books.map((book) => {
             return <Book book={ book } />
           })}

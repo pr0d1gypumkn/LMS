@@ -48,7 +48,7 @@ export default function BookFilters() {
   }, []);
 
   return(
-    <table className="min-w-full border border-neutral-200 text-left text-sm font-light text-surface dark:border-white/10 dark:text-white">
+    <table className="border border-neutral-200 text-left text-sm font-light text-surface dark:border-white/10 dark:text-white min-w-[260px]">
       <thead className="border-b border-neutral-200 font-medium dark:border-white/10">
         <tr>
           <th scope="col" className="border-e border-neutral-200 px-6 py-4 dark:border-white/10 bg-lightTint dark:bg-neutral-600">
