@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         "main": "#ff8903",
         "accent": "#ff8903",
+        "lightTint": "#fff0e0",
       },
       fontSize: {
         "header": "4rem",
